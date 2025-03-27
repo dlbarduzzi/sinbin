@@ -8,6 +8,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["test", "development", "production"]),
   APP_PORT: z.coerce.number(),
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]),
+  BODY_LIMIT_BYTES: z.coerce.number(),
 })
 
 // eslint-disable-next-line node/no-process-env

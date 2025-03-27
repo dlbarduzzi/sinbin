@@ -1,13 +1,17 @@
 import type { AppEnv, AppHono } from "./types"
 
 import { Hono } from "hono"
+import { bodyLimit } from "hono/body-limit"
 import { requestId } from "hono/request-id"
 
+import { env } from "@/config/env"
 import { logger } from "@/config/logger"
 
 import {
   StatusNotFoundCode,
   StatusNotFoundText,
+  StatusRequestEntityTooLargeCode,
+  StatusRequestEntityTooLargeText,
   StatusInternalServerErrorCode,
   StatusInternalServerErrorText,
 } from "./status"
@@ -23,6 +27,14 @@ export function bootstrap(app: AppHono) {
     ctx.set("logger", logger)
     await next()
   })
+
+  app.use("*", bodyLimit({ maxSize: env.BODY_LIMIT_BYTES, onError: ctx => {
+    return ctx.json({
+      ok: false,
+      error: StatusRequestEntityTooLargeText,
+      message: `Request body must not be larger than ${env.BODY_LIMIT_BYTES} bytes`,
+    }, StatusRequestEntityTooLargeCode)
+  } }))
 
   app.notFound(ctx => {
     return ctx.json({
