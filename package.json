@@ -8,7 +8,10 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest",
-    "test:single": "vitest --no-file-parallelism"
+    "test:single": "vitest --no-file-parallelism",
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "drizzle-kit migrate",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.0",

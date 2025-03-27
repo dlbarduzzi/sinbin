@@ -13,17 +13,17 @@ describe("request.json", () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
-    const { error } = await getJsonPayload(req, req.headers)
-    expect(error).toBe("Request body contains malformed JSON content")
+    const result = await getJsonPayload(req, req.headers)
+    expect(result.error).toBe("Request body contains malformed JSON content")
   })
   it("should return valid body content", async () => {
     const req = new Request("http://localhost:3000", {
-      body: JSON.stringify({ email: "test@email.com" }),
+      body: JSON.stringify({ foo: "bar" }),
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
-    const { body, error } = await getJsonPayload(req, req.headers)
-    expect(error).toBeUndefined()
-    expect(body).toHaveProperty("email")
+    const result = await getJsonPayload(req, req.headers)
+    expect(result.body).toHaveProperty("foo")
+    expect(result.error).toBeUndefined()
   })
 })
