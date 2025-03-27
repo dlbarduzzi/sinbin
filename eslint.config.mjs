@@ -9,7 +9,7 @@ export default antfu({
     semi: false,
     quotes: "double",
   },
-  ignores: ["node_modules/**"],
+  ignores: ["node_modules/**", "src/db/migrations/**"],
 }, {
   rules: {
     "style/arrow-parens": "off",
